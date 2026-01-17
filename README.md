@@ -132,8 +132,10 @@ public class PlayerJump : MonoBehaviour
 ```
 
 3. Crear un script para que la plataforma se mueve horizontal y vertical automaticamente
-   using UnityEngine;
+   
 ```
+using UnityEngine;
+
 public class MovingPlatform : MonoBehaviour
 {
     public float speed = 2f;
@@ -157,3 +159,22 @@ public class MovingPlatform : MonoBehaviour
 
 Resultado:
 ![alt text](Unity_3eqEE4b69s.gif)
+
+
+## Manejar colisiones con elementos de una capa determinada
+Podemos utilizar las capas para que el efecto de las colisiones sólo se tenga en cuenta cuando se pertenece a una determinada capa, o se descarten.
+
+1. Podemos modificar el codigo para que comprobar primero que si está en la capa NoCollis, que no hace nada y luego verificar que si el objeto es una plataforma(con etiqueta **platform**), finalmente, ejecuta la lógica para separarse de la plataforma.
+```
+private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer!=LayerMask.NameToLayer("NoCollis")){
+        //Lógica para los elementos que si colisionan.
+            if (collision.gameObject.CompareTag("Platform"))
+            {
+                // No hacemos SetParent aquí directamente，porque da error, hacemos un frame después
+                Invoke(nameof(DetachFromPlatform), 0.01f);
+            }
+        }
+    }
+```

@@ -42,10 +42,13 @@ public class PlayerJump : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            // No hacemos SetParent aquí directamente， porque da error, hacemos un frame después
-            Invoke(nameof(DetachFromPlatform), 0.01f);
+        if(collision.gameObject.layer!=LayerMask.NameToLayer("NoCollis")){
+        //Lógica para los elementos que si colisionan.
+            if (collision.gameObject.CompareTag("Platform"))
+            {
+                // No hacemos SetParent aquí directamente，porque da error, hacemos un frame después
+                Invoke(nameof(DetachFromPlatform), 0.01f);
+            }
         }
     }
 
