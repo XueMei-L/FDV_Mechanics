@@ -178,3 +178,23 @@ private void OnCollisionExit2D(Collision2D collision)
         }
     }
 ```
+
+## Plataformas invisibles que se vuelven visibles
+Podemos hacer una gestión similar al caso anterior, sólo que en este caso nos interesa manejar los casos en el que se pertenece a la capa de plataformas invisibles. Una vez detectado el caso, se ejecutará la lógica que queramos llevar a cabo, incluido, si así lo consideramos volver la plataforma visible.
+
+1. Configurar una plataforma invisible
+![alt text](image-2.png)
+
+2. Añadir el siguiente código en la funcion **OnCollisionExit2D**
+```
+// plataforma invisible
+if(collision.gameObject.layer == LayerMask.NameToLayer("PlatInv"))
+{
+    Debug.Log("Jugador salió de la plataforma invisible");
+    Invoke(nameof(DetachFromPlatform), 0.01f);
+    collision.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+}
+```
+
+Resultado:
+![alt text](Unity_e28cZwToaR.gif)
